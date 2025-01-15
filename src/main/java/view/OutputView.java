@@ -1,21 +1,20 @@
 package view;
 
 import java.util.List;
-import racingcar.Racing;
 
 public class OutputView {
 
-    public static void println(String message) {
-        System.out.println(message);
+    private static final String FORWARD_UNIT = "-";
+
+    public void printf(String message) {
+        System.out.printf(message);
     }
 
-    public void printRacingResult(Racing racing) {
-        racing.printAllRacingResult();
-    }
-
-    public void printFinalWinners(Racing racing) {
-        List<String> winners = racing.findWinners();
+    public void finalWinners(List<String> winners) {
         System.out.printf("최종 우승자 : %s", String.join(", ", winners));
     }
 
+    public void printRacing(String carName, int forward) {
+        System.out.printf("%s : %s%n", carName, FORWARD_UNIT.repeat(Math.max(0, forward)));
+    }
 }

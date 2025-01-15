@@ -1,47 +1,39 @@
 package racingcar;
 
-import exception.CustomException;
+import util.NumberGenerator;
 
 public class Car {
-    private final String name;
-    private int position = 0;
-    public static final int MINIMUM_MOVE_VALUE = 4;
-    public static final String FORWARD_UNIT = "-";
 
-    public Car(String name) {
-        verifyCarName(name);
+    private static final int MINIMUM_MOVE_VALUE = 4;
+    private static final int DEFAULT_POSITION = 0;
+
+    private final Name name;
+    private int position;
+
+    private Car(Name name, int position) {
         this.name = name;
+        this.position = position;
+    }
+
+    public static Car createDefaultCar(String name) {
+        return new Car(Name.of(name), DEFAULT_POSITION);
+    }
+
+    public void move(NumberGenerator numberGenerator) {
+        if (numberGenerator.makeNumber() >= MINIMUM_MOVE_VALUE) {
+            this.position++;
+        }
+    }
+
+    public boolean isSamePosition(int position) {
+        return position == this.position;
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public int getPosition() {
         return position;
     }
-
-    public void verifyCarName(String name) {
-        if (name.isEmpty()) {
-            CustomException.throwException("자동차 이름을 입력해주세요");
-        }
-        if (name.length() > 5) {
-            CustomException.throwException("자동차 이름은 최대 5자입니다.");
-        }
-    }
-
-    public void move(int random) {
-        if (random >= MINIMUM_MOVE_VALUE) {
-            this.position++;
-        }
-    }
-
-    public void printCarInfo() {
-        StringBuilder forwardUnits = new StringBuilder();
-        for (int i = 0; i < position; i++) {
-            forwardUnits.append(FORWARD_UNIT);
-        }
-        System.out.printf("%s : %s%n", this.name, forwardUnits);
-    }
-
 }
